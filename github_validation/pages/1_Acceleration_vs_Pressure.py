@@ -31,3 +31,4 @@ if data1 is not None:
         ax.set_ylabel('Acceleration (ms-2)')
         ax.set_zlabel('Pressure')
         return fig
+    st.pyplot(fig)
