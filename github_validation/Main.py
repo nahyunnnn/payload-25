@@ -27,17 +27,19 @@ with con1:
     st.subheader('Original line image')
     con1_1 = st.container(height = 350, border=True)
 
-
-con2 = row1[1].container()
-with con2:
+con1_2 = row1[1].container()
+with con1_2:
     st.subheader('Transform output image')
-    con2_1 = st.container(height = 350, border=True)
+    con1_2_1 = st.container(height = 350, border=True)
+
+con2 = row2[0].container
 
 con3_1 = row3[0].container()
 con3_3 = row3[1].container()
 
 with row2[0]:
     st.subheader("Line equations")
+
 if line_image:
     with tempfile.NamedTemporaryFile(delete=False,suffix = '.jpg') as temp_image:
         temp_image.write(line_image.getbuffer())
@@ -67,7 +69,7 @@ if line_image:
         normal_distances =np.clip(distances/tolerance,0,1)
         
         # draw line of best fit:
-        st.write(f"Line of Best Fit: y={m:.2f}x+{b:.2f}")
+        con2.write(f"Line of Best Fit: y={m:.2f}x+{b:.2f}")
         x_min, x_max = int(np.min(x)), int(np.max(x))
         y_min, y_max = int(m*x_min + b), int(m*x_max+b)
         cv.line(img, (x_min, y_min), (x_max, y_max), (0,0,255), 2)
