@@ -34,8 +34,6 @@ with con1_2:
 
 con_2 = row2[0].container
 
-with row3:
-    st.subheader('Scores')
 con3_1 = row3[0].container(border = True)
 with con3_1:
     st.subheader('Straightness')
