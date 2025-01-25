@@ -20,6 +20,7 @@ st.write("---")
 
 row1 = st.columns([0.4,0.6])
 row2 = st.columns(1)
+row3 = st.columns(3)
 
 con1 = row1[0].container()
 with con1:
@@ -32,7 +33,8 @@ with con2:
     st.subheader('Transform output image')
     con2_1 = st.container(height = 350, border=True)
 
-
+con3_1 = row3[0].container()
+con3_3 = row3[1].container()
 
 with row2[0]:
     st.subheader("Line equations")
@@ -109,15 +111,15 @@ if line_image:
                     if np.sin(theta) != 0:
                         m = -np.cos(theta)/np.sin(theta)
                         b = rho/np.cos(theta)
-                        st.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
-                st.write("Hough Lines detected,") #Score automatically 1 
+                        con3_1.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
+                con3_1.write("Hough Lines detected,") #Score automatically 1 
             
             else:
                 score = calculate_straightness(cannyEdge, tolerance = 100)
                 if score is not None:
-                    st.write(f"Straightness Score: {score:.2f}")
+                    con3_3.write(f"Straightness Score: {score:.2f}")
                 else:
-                    print("gg")
+                    con3_3.write("gg")
             
             con2_1.pyplot(fig)
 
