@@ -75,52 +75,48 @@ if line_image:
         score = 1-np.mean(normal_distances)
         return score
 
-        def houghLineTransform():
+    def houghLineTransform():
 
-            fig = plt.figure(figsize=(18,10))
-            plt.subplot(121)
-            plt.imshow(img)
-            plt.subplot(122)
+        fig = plt.figure(figsize=(18,10))
+        plt.subplot(121)
+        plt.imshow(img)            
+        plt.subplot(122)
 
-            plt.imshow(cannyEdge)
-            # plt.text(-50, 500, "Global Text", fontsize=14, color='red', ha='center')
+        plt.imshow(cannyEdge)
+        # plt.text(-50, 500, "Global Text", fontsize=14, color='red', ha='center')
 
-            distResol = 1
-            angleResol = np.pi/180
-            threshold = 250
-            lines = cv.HoughLines(cannyEdge,distResol, angleResol, threshold)
-            k=500
-
-            if lines is not None:
-                for curline in lines:
-                    rho,theta = curline[0]
-                    dhat = np.array([[np.cos(theta)],[np.sin(theta)]])
-                    d = rho*dhat
-                    lhat = np.array([[-np.sin(theta)],[np.cos(theta)]])
-                    p1 = d + k*lhat
-                    p2 = d - k*lhat
-                    p1 = p1.astype(int)
-                    p2 = p2.astype(int)
-                    cv.line(img, (p1[0][0], p1[1][0]), (p2[0][0], p2[1][0]), (0,0,0), 10)
-
-                    # Line drawn 
-                    ''' xcos(theta) + ysin(theta) = p
-                        y = -cos(theta)/sin(theta)x + p/sin(theta)
-                    
-                    '''
-                    if np.sin(theta) != 0:
-                        m = -np.cos(theta)/np.sin(theta)
-                        b = rho/np.cos(theta)
-                        con3_1.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
-                con3_1.write("Hough Lines detected,") #Score automatically 1 
+        distResol = 1            
+        angleResol = np.pi/180
+        threshold = 250
+        lines = cv.HoughLines(cannyEdge,distResol, angleResol, threshold)
+        k=500
+        if lines is not None:                
+            for curline in lines:
+                rho,theta = curline[0]
+                dhat = np.array([[np.cos(theta)],[np.sin(theta)]])
+                d = rho*dhat
+                lhat = np.array([[-np.sin(theta)],[np.cos(theta)]])
+                p1 = d + k*lhat
+                p2 = d - k*lhat
+                p1 = p1.astype(int)
+                p2 = p2.astype(int)
+                cv.line(img, (p1[0][0], p1[1][0]), (p2[0][0], p2[1][0]), (0,0,0), 10)
+                # Line drawn 
+                ''' xcos(theta) + ysin(theta) = p                       
+                    y = -cos(theta)/sin(theta)x + p/sin(theta) 
+                '''
+                if np.sin(theta) != 0:
+                    m = -np.cos(theta)/np.sin(theta)
+                    b = rho/np.cos(theta)
+                    con3_1.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
+            con3_1.write("Hough Lines detected,") #Score automatically 1 
+        else:
+            score = calculate_straightness(cannyEdge, tolerance = 100)
+            if score is not None:                    
+                con3_3.write(f"Straightness Score: {score:.2f}")
+            else:                    
+                con3_3.write("gg")
             
-            else:
-                score = calculate_straightness(cannyEdge, tolerance = 100)
-                if score is not None:
-                    con3_3.write(f"Straightness Score: {score:.2f}")
-                else:
-                    con3_3.write("gg")
-            
-            con2_1.pyplot(fig)
+        con2_1.pyplot(fig)
 
-        houghLineTransform()
+    houghLineTransform()
