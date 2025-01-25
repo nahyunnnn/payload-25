@@ -17,16 +17,10 @@ row0 = st.columns([2,5,2])
 line_image = row0[1].file_uploader('Upload line image')
 
 st.write("---")
-# img = cv.imread(line_image, cv.IMREAD_GRAYSCALE)
-# st.pyplot(img)
 
-# col1, col2 = st.columns(4,5)
-# st.container()
 row1 = st.columns([0.4,0.6])
 row2 = st.columns(1)
 
-# for col in row1 + row2:
-#     tile = col.container(height=120)
 con1 = row1[0].container()
 with con1:
     st.subheader('Original line image')
@@ -46,11 +40,7 @@ if line_image:
     with tempfile.NamedTemporaryFile(delete=False,suffix = '.jpg') as temp_image:
         temp_image.write(line_image.getbuffer())
         temp_image.seek(0)
-        # image_path = temp_image.name
-
-        # original_image = temp_image.read()
         con1_1.image(temp_image.name)
-        # st.image(line_image)
         def houghLineTransform():
             img = cv.imread(temp_image.name, cv.IMREAD_GRAYSCALE)
             if img is None:
