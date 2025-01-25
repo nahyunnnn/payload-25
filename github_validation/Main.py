@@ -41,13 +41,39 @@ if line_image:
         temp_image.write(line_image.getbuffer())
         temp_image.seek(0)
         con1_1.image(temp_image.name)
-        def houghLineTransform():
-            img = cv.imread(temp_image.name, cv.IMREAD_GRAYSCALE)
-            if img is None:
-                st.write('File read unsuccesful. Please check file type.')
+    img = cv.imread(temp_image.name, cv.IMREAD_GRAYSCALE)
+        if img is None:
+            st.write('File read unsuccesful. Please check file type.')
  
-            imgBlur = cv.GaussianBlur(img, (21,21), 3)
-            cannyEdge =cv.Canny(imgBlur, 50, 180)
+        imgBlur = cv.GaussianBlur(img, (15,15), 3)
+        thresholded_image = cv.adaptiveThreshold(imgBlur, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, 11, 2)
+        cannyEdge =cv.Canny(imgBlur, 50, 180)
+    
+    def calculate_straightness(edge_image, tolerance):
+        edge_points = np.column_stack(np.where(edge_image > 0))
+        if len(edge_points) < 2:
+            return None
+        
+        #Least squares regression
+        x = edge_points[:,1]
+        y = edge_points[:,0]
+
+        A = np.vstack([x, np.ones_like(x)]).T
+        m,b = np.linalg.lstsq(A,y,rcond=None)[0]
+
+        distances = np.abs(m*x+b - y)/np.sqrt(m**2+1)
+        normal_distances =np.clip(distances/tolerance,0,1)
+        
+        # draw line of best fit:
+        st.write(f"Line of Best Fit: y={m:.2f}x+{b:.2f}")
+        x_min, x_max = int(np.min(x)), int(np.max(x))
+        y_min, y_max = int(m*x_min + b), int(m*x_max+b)
+        cv.line(img, (x_min, y_min), (x_max, y_max), (0,0,255), 2)
+
+        score = 1-np.mean(normal_distances)
+        return score
+
+        def houghLineTransform():
 
             fig = plt.figure(figsize=(18,10))
             plt.subplot(121)
@@ -59,33 +85,40 @@ if line_image:
 
             distResol = 1
             angleResol = np.pi/180
-            threshold = 150
+            threshold = 250
             lines = cv.HoughLines(cannyEdge,distResol, angleResol, threshold)
-            k=3000
+            k=500
 
-            for curline in lines:
-                rho,theta = curline[0]
-                dhat = np.array([[np.cos(theta)],[np.sin(theta)]])
-                d = rho*dhat
-                lhat = np.array([[-np.sin(theta)],[np.cos(theta)]])
-                p1 = d + k*lhat
-                p2 = d - k*lhat
-                p1 = p1.astype(int)
-                p2 = p2.astype(int)
-                cv.line(img, (p1[0][0], p1[1][0]), (p2[0][0], p2[1][0]), (255,255,255), 10)
+            if lines is not None:
+                for curline in lines:
+                    rho,theta = curline[0]
+                    dhat = np.array([[np.cos(theta)],[np.sin(theta)]])
+                    d = rho*dhat
+                    lhat = np.array([[-np.sin(theta)],[np.cos(theta)]])
+                    p1 = d + k*lhat
+                    p2 = d - k*lhat
+                    p1 = p1.astype(int)
+                    p2 = p2.astype(int)
+                    cv.line(img, (p1[0][0], p1[1][0]), (p2[0][0], p2[1][0]), (0,0,0), 10)
 
-                # Line drawn 
-                # ''' xcos(theta) + ysin(theta) = p
-                #     y = -cos(theta)/sin(theta)x + p/sin(theta)
-                
-                # '''
-                if np.sin(theta) != 0:
-                    m = -np.cos(theta)/np.sin(theta)
-                    b = rho/np.cos(theta)
-
-                if m:
-                    row2[0].write(f"Line equation: y = {m:.2f}x + {b:.2f}")
-
+                    # Line drawn 
+                    ''' xcos(theta) + ysin(theta) = p
+                        y = -cos(theta)/sin(theta)x + p/sin(theta)
+                    
+                    '''
+                    if np.sin(theta) != 0:
+                        m = -np.cos(theta)/np.sin(theta)
+                        b = rho/np.cos(theta)
+                        st.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
+                st.write("Hough Lines detected,") #Score automatically 1 
+            
+            else:
+                score = calculate_straightness(cannyEdge, tolerance = 100)
+                if score is not None:
+                    st.write(f"Straightness Score: {score:.2f}")
+                else:
+                    print("gg")
+            
             con2_1.pyplot(fig)
 
         houghLineTransform()
