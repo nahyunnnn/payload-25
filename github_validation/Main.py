@@ -42,12 +42,12 @@ if line_image:
         temp_image.seek(0)
         con1_1.image(temp_image.name)
     img = cv.imread(temp_image.name, cv.IMREAD_GRAYSCALE)
-        if img is None:
-            st.write('File read unsuccesful. Please check file type.')
+    if img is None:
+        st.write('File read unsuccesful. Please check file type.')
  
-        imgBlur = cv.GaussianBlur(img, (15,15), 3)
-        thresholded_image = cv.adaptiveThreshold(imgBlur, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, 11, 2)
-        cannyEdge =cv.Canny(imgBlur, 50, 180)
+    imgBlur = cv.GaussianBlur(img, (15,15), 3)
+    thresholded_image = cv.adaptiveThreshold(imgBlur, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, 11, 2)        
+    cannyEdge =cv.Canny(imgBlur, 50, 180)
     
     def calculate_straightness(edge_image, tolerance):
         edge_points = np.column_stack(np.where(edge_image > 0))
