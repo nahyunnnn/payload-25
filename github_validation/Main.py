@@ -32,10 +32,19 @@ with con1_2:
     st.subheader('Transform output image')
     con1_2_1 = st.container(height = 350, border=True)
 
-con2 = row2[0].container
+con_2 = row2[0].container
 
-con3_1 = row3[0].container()
-con3_3 = row3[1].container()
+with row3:
+    st.subheader('Scores')
+con3_1 = row3[0].container(border = True)
+with con3_1:
+    st.subheader('Straightness')
+con3_2 = row3[1].container(border = True)
+with con3_2:
+    st.subheader('Accuracy')
+con3_3 = row3[1].container(border = True)
+with con3_3:
+    st.subheader('Pressure')
 
 with row2[0]:
     st.subheader("Line equations")
@@ -110,14 +119,14 @@ if line_image:
                 if np.sin(theta) != 0:
                     m = -np.cos(theta)/np.sin(theta)
                     b = rho/np.cos(theta)
-                    con3_1.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
+                    con_2.write(f"Line Equation: y = {m:.2f}x+{b:.2}")
             con3_1.write("Hough Lines detected,") #Score automatically 1 
         else:
             score = calculate_straightness(cannyEdge, tolerance = 100)
             if score is not None:                    
-                con3_3.write(f"Straightness Score: {score:.2f}")
+                con3_1.write(f"Straightness Score: {score:.2f}")
             else:                    
-                con3_3.write("gg")
+                con3_1.write("gg")
             
         con1_2_1.pyplot(fig)
 
