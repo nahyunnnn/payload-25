@@ -40,7 +40,7 @@ with con3_1:
 con3_2 = row3[1].container(border = True)
 with con3_2:
     st.subheader('Accuracy')
-con3_3 = row3[1].container(border = True)
+con3_3 = row3[2].container(border = True)
 with con3_3:
     st.subheader('Pressure')
 
