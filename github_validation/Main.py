@@ -119,6 +119,6 @@ if line_image:
             else:                    
                 con3_3.write("gg")
             
-        con2_1.pyplot(fig)
+        con1_2_1.pyplot(fig)
 
     houghLineTransform()
