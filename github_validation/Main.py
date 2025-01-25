@@ -32,7 +32,7 @@ with con1_2:
     st.subheader('Transform output image')
     con1_2_1 = st.container(height = 350, border=True)
 
-con2 = row2[0].container
+con2 = row2.container
 
 con3_1 = row3[0].container()
 con3_3 = row3[1].container()
