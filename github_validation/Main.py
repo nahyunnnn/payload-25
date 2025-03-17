@@ -40,9 +40,19 @@ with con3_1:
 con3_2 = row3[1].container(border = True)
 with con3_2:
     st.subheader('Accuracy')
+    values3_2 = [1.00,0]
+    figs3_2 = go.Figure(data=[go.Pie(values=values3_2, hole=0.3)])
+    figs3_2.update_layout(showlegend=False)
+    figs3_2.update_traces(textinfo='none')
+    con3_2.plotly_chart(figs3_2)
 con3_3 = row3[2].container(border = True)
 with con3_3:
     st.subheader('Pressure')
+    values3_3 = [1,0]
+    figs3_3 = go.Figure(data=[go.Pie(values=values3_3, hole=0.3)])
+    figs3_3.update_layout(showlegend=False)
+    figs3_3.update_traces(textinfo='none')
+    con3_3.plotly_chart(figs3_3)
 
 with row2[0]:
     st.subheader("Line equations")
@@ -121,7 +131,12 @@ if line_image:
             con3_1.write("Hough Lines detected,") #Score automatically 1 
         else:
             score = calculate_straightness(cannyEdge, tolerance = 100)
-            if score is not None:                    
+            if score is not None:
+                values3_1 = [score, 1-score]
+                figs3_1 = go.Figure(data=[go.Pie(values=values3_1, hole=0.3)])
+                figs3_1.update_layout(showlegend=False)
+                figs3_1.update_traces(textinfo='none')
+                con3_1.plotly_chart(figs3_1)
                 con3_1.write(f"Straightness Score: {score:.2f}")
             else:                    
                 con3_1.write("gg")
