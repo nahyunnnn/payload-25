@@ -7,6 +7,7 @@ import numpy as np
 import os
 from PIL import Image
 import tempfile
+import plotly.graph_objects as go
 
 st.set_page_config(layout='wide', page_title='Main')
 
