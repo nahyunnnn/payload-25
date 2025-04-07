@@ -40,8 +40,8 @@ with con3_1:
     st.subheader('Straightness')
 
 ####CHANGE THIS LATER #####
-accuracyscore = 1.00
-pressurescore = 1.00
+accuracyscore = 1.0
+pressurescore = 1.0
 ###########################
 
 con3_2 = row3[1].container(height = 650, border = True)
@@ -57,7 +57,7 @@ con3_3 = row3[2].container(height = 650, border = True)
 with con3_3:
     st.subheader('Pressure')
     values3_3 = [pressurescore,0]
-    figs3_3 = go.Figure(data=[go.Pie(values=values3_3, hole=0.3)])
+    figs3_3 = go.Figure(data=[go.Pie(values=values3_3, hole=0.6)])
     figs3_3.update_layout(showlegend=False, annotations =[dict(text=f"{pressurescore*100}%",x=0.5, y=0.5,
                       font_size=60, showarrow=False, xanchor="center")])
     figs3_3.update_traces(textinfo='none', marker = dict(colors=['lightgreen', 'white']))
