@@ -33,30 +33,38 @@ with con1_2:
     st.subheader('Transform output image')
     con1_2_1 = st.container(height = 350, border=True)
 
-con_2 = row2[0].container
+con_2 = row2[0].container()
 
 con3_1 = row3[0].container(border = True)
 with con3_1:
     st.subheader('Straightness')
-con3_2 = row3[1].container(border = True)
+
+####CHANGE THIS LATER #####
+accuracyscore = 1.00
+pressurescore = 1.00
+###########################
+
+con3_2 = row3[1].container(height = 650, border = True)
 with con3_2:
     st.subheader('Accuracy')
-    values3_2 = [1.00,0]
-    figs3_2 = go.Figure(data=[go.Pie(values=values3_2, hole=0.3)])
-    figs3_2.update_layout(showlegend=False)
-    figs3_2.update_traces(textinfo='none')
+    values3_2 = [accuracyscore,0]
+    figs3_2 = go.Figure(data=[go.Pie(values=values3_2, hole=0.6)])
+    figs3_2.update_layout(showlegend=False, annotations =[dict(text=f"{accuracyscore*100}%",x=0.5, y=0.5,
+                      font_size=60, showarrow=False, xanchor="center")])
+    figs3_2.update_traces(textinfo='none', marker = dict(colors=['lightgreen', 'white']))
     con3_2.plotly_chart(figs3_2)
-con3_3 = row3[2].container(border = True)
+con3_3 = row3[2].container(height = 650, border = True)
 with con3_3:
     st.subheader('Pressure')
-    values3_3 = [1,0]
+    values3_3 = [pressurescore,0]
     figs3_3 = go.Figure(data=[go.Pie(values=values3_3, hole=0.3)])
-    figs3_3.update_layout(showlegend=False)
-    figs3_3.update_traces(textinfo='none')
+    figs3_3.update_layout(showlegend=False, annotations =[dict(text=f"{pressurescore*100}%",x=0.5, y=0.5,
+                      font_size=60, showarrow=False, xanchor="center")])
+    figs3_3.update_traces(textinfo='none', marker = dict(colors=['lightgreen', 'white']))
     con3_3.plotly_chart(figs3_3)
 
-with row2[0]:
-    st.subheader("Line equations")
+with con_2:
+    st.subheader("Line of Best Fit")
 
 if line_image:
     with tempfile.NamedTemporaryFile(delete=False,suffix = '.jpg') as temp_image:
@@ -87,7 +95,7 @@ if line_image:
         normal_distances =np.clip(distances/tolerance,0,1)
         
         # draw line of best fit:
-        row2[0].write(f"Line of Best Fit: y={m:.2f}x+{b:.2f}")
+        con_2.latex(f"\Large y={m:.2f}x+{b:.2f}")
         x_min, x_max = int(np.min(x)), int(np.max(x))
         y_min, y_max = int(m*x_min + b), int(m*x_max+b)
         cv.line(img, (x_min, y_min), (x_max, y_max), (0,0,255), 2)
@@ -133,12 +141,20 @@ if line_image:
         else:
             score = calculate_straightness(cannyEdge, tolerance = 100)
             if score is not None:
+                if float(score) > 0.5:
+                    global indicator_color 
+                    indicator_color ='lightgreen'
+                else:
+                    indicator_color = 'red'
+                colors = [indicator_color,'white']
                 values3_1 = [score, 1-score]
-                figs3_1 = go.Figure(data=[go.Pie(values=values3_1, hole=0.3)])
-                figs3_1.update_layout(showlegend=False)
-                figs3_1.update_traces(textinfo='none')
+                figs3_1 = go.Figure(data=[go.Pie(values=values3_1, hole=0.6)])
+                figs3_1.update_layout(showlegend=False,
+                                      annotations =[dict(text=f"{100*score:.1f}%",x=0.5, y=0.5,
+                      font_size=60, showarrow=False, xanchor="center")])
+                figs3_1.update_traces(textinfo='none',marker = dict(colors=colors))
                 con3_1.plotly_chart(figs3_1)
-                con3_1.write(f"Straightness Score: {score:.2f}")
+                # con3_1.write(f"Straightness Score: {score:.2f}")
             else:                    
                 con3_1.write("gg")
             
