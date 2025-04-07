@@ -40,7 +40,7 @@ with con3_1:
     st.subheader('Straightness')
 
 ####CHANGE THIS LATER #####
-accuracyscore = 1.0
+accuracyscore = 1
 pressurescore = 1.0
 ###########################
 
