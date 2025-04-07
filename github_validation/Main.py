@@ -56,7 +56,7 @@ with con3_2:
 con3_3 = row3[2].container(height = 650, border = True)
 with con3_3:
     st.subheader('Pressure')
-    values3_3 = [pressurescore,0]
+    values3_3 = [1.0,0]
     figs3_3 = go.Figure(data=[go.Pie(values=values3_3, hole=0.6)])
     figs3_3.update_layout(showlegend=False, annotations =[dict(text=f"{pressurescore*100}%",x=0.5, y=0.5,
                       font_size=60, showarrow=False, xanchor="center")])
