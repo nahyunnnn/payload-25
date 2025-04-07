@@ -33,7 +33,7 @@ with con1_2:
     st.subheader('Transform output image')
     con1_2_1 = st.container(height = 350, border=True)
 
-con_2 = row2[0].container()
+con_2 = row2[0].container(border=True)
 
 con3_1 = row3[0].container(border = True)
 with con3_1:
@@ -44,7 +44,7 @@ accuracyscore = 1
 pressurescore = 1.0
 ###########################
 
-con3_2 = row3[1].container(height = 650, border = True)
+con3_2 = row3[1].container(border = True)
 with con3_2:
     st.subheader('Accuracy')
     values3_2 = [accuracyscore,0]
@@ -53,7 +53,7 @@ with con3_2:
                       font_size=60, showarrow=False, xanchor="center")])
     figs3_2.update_traces(textinfo='none', marker = dict(colors=['lightgreen', 'white']))
     con3_2.plotly_chart(figs3_2)
-con3_3 = row3[2].container(height = 650, border = True)
+con3_3 = row3[2].container(border = True)
 with con3_3:
     st.subheader('Pressure')
     values3_3 = [1.0,0]
