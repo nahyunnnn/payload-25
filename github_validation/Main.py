@@ -19,6 +19,7 @@ line_image = row0[1].file_uploader('Upload line image')
 
 st.write("---")
 
+# container formatting 
 row1 = st.columns([0.4,0.6])
 row2 = st.columns(1)
 row3 = st.columns(3)
@@ -39,10 +40,10 @@ con3_1 = row3[0].container(border = True)
 with con3_1:
     st.subheader('Straightness')
 
-####CHANGE THIS LATER #####
+#### CHANGE THIS LATER #####
 accuracyscore = 1
 pressurescore = 1.0
-###########################
+############################
 
 con3_2 = row3[1].container(border = True)
 with con3_2:
@@ -53,6 +54,7 @@ with con3_2:
                       font_size=60, showarrow=False, xanchor="center")])
     figs3_2.update_traces(textinfo='none', marker = dict(colors=['lightgreen', 'white']))
     con3_2.plotly_chart(figs3_2)
+    
 con3_3 = row3[2].container(border = True)
 with con3_3:
     st.subheader('Pressure')
