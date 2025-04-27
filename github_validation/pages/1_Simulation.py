@@ -1,7 +1,10 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.set_page_config(layout='wide', page_title = 'Simulation of Payload Tetra')
+st.set_page_config(layout='wide', 
+                   page_title = 'Simulation of Payload Tetra',
+                  page_icon=":rocket:")
+
 st.title('Simulation of Payload Tetra')
 
 def run():
@@ -10,3 +13,5 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+st.caption("Go to 'Coords' and press play on 'S' to watch Tetra move", unsafe_allow_html=False, *, help=None)
