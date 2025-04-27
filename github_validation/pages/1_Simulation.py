@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(layout='wide', 
                    page_title = 'Simulation of Payload Tetra',
-                  page_icon=":rocket:")
+                  page_icon="/icons/online_ares_logo.svg")
 
 st.title('Simulation of Payload Tetra')
 
