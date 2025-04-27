@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(layout='wide', 
                    page_title = 'Simulation of Payload Tetra',
-                  page_icon="online_ares_logo.jpeg")  # adds ARES icon to the top //  .. = prev directory
+                  page_icon="../pages/icons/online_ares_logo.jpeg")  # adds ARES icon to the top //  .. = prev directory
 
 st.title('Simulation of Payload Tetra')
 
