@@ -14,4 +14,4 @@ def run():
 if __name__ == "__main__":
     run()
 
-st.caption("Go to 'Coords' and press play on 'S' to watch Tetra move", unsafe_allow_html=False, *, help=None)
+st.caption("Go to 'Coords' and press play on 'S' to watch Tetra move")
