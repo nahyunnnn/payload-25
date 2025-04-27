@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(layout='wide', 
                    page_title = 'Simulation of Payload Tetra',
-                  page_icon="/icons/online_ares_logo.svg")
+                  page_icon="../icons/online_ares_logo.svg")  # adds ARES icon to the top //  .. = prev directory
 
 st.title('Simulation of Payload Tetra')
 
@@ -14,4 +14,4 @@ def run():
 if __name__ == "__main__":
     run()
 
-st.caption("Go to 'Coords' and press play on 'S' to watch Tetra move")
+st.markdown("Go to 'Coords' and press play on 'S' to watch Tetra move")  # can also use st.caption but not as clear
