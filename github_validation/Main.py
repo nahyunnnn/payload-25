@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 from PIL import Image
 
 # Adding logo and configuring page layout
-logo = Image.open('ares_logo.png')
+logo = 'https://github.com/nahyunnnn/payload-25/blob/main/github_validation/pages/icons/online_ares_logo.jpeg?raw=true'
 st.set_page_config(layout='wide', page_title='Main', page_icon=logo)
 st.logo(logo, size = 'large')
 
