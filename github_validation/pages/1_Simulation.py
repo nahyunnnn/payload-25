@@ -1,9 +1,13 @@
 import streamlit as st
 import streamlit.components.v1 as components
+from PIL import Image
 
-st.set_page_config(layout='wide', page_title = 'Simulation of Payload Tetra')
+# Adding logo and configuring page layout
+logo = Image.open('ares_logo.png')
+st.set_page_config(layout='wide', page_title = 'Simulation of Payload Tetra', page_icon=logo)
+st.logo(logo, size = 'large')
+
 st.title('Simulation of Payload Tetra')
-
 def run():
     iframe_src = "https://www.desmos.com/3d/j2bhvgzpr6"
     components.iframe(iframe_src, height = 450)

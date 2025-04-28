@@ -6,8 +6,13 @@ import matplotlib.pyplot as plt
 from matplotlib import cbook, cm
 from matplotlib.colors import LightSource
 from matplotlib.ticker import LinearLocator
+from PIL import Image
 
-st.set_page_config(page_title='Acceleration vs Pressure')
+# Adding logo and configuring page layout
+logo = Image.open('ares_logo.png')
+st.set_page_config(page_title='Acceleration vs Pressure', page_icon=logo)
+st.logo(logo, size = 'large')
+
 st.title('Acceleration vs Pressure graph')
 data1 = st.file_uploader('CSV file')
 

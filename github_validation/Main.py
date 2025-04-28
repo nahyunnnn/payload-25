@@ -8,8 +8,12 @@ import os
 from PIL import Image
 import tempfile
 import plotly.graph_objects as go
+from PIL import Image
 
-st.set_page_config(layout='wide', page_title='Main')
+# Adding logo and configuring page layout
+logo = Image.open('ares_logo.png')
+st.set_page_config(layout='wide', page_title='Main', page_icon=logo)
+st.logo(logo, size = 'large')
 
 row00 = st.columns([2,8])
 row00[1].title('Lemaire Payload Line Validation', )
@@ -45,6 +49,7 @@ accuracyscore = 1
 pressurescore = 1.0
 ############################
 
+# accuracy score container
 con3_2 = row3[1].container(border = True)
 with con3_2:
     st.subheader('Accuracy')
@@ -55,6 +60,7 @@ with con3_2:
     figs3_2.update_traces(textinfo='none', marker = dict(colors=['lightgreen', 'white']))
     con3_2.plotly_chart(figs3_2)
     
+# pressure score container
 con3_3 = row3[2].container(border = True)
 with con3_3:
     st.subheader('Pressure')
@@ -68,6 +74,7 @@ with con3_3:
 with con_2:
     st.subheader("Line of Best Fit")
 
+# validation system code
 if line_image:
     with tempfile.NamedTemporaryFile(delete=False,suffix = '.jpg') as temp_image:
         temp_image.write(line_image.getbuffer())
