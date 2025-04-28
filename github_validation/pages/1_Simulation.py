@@ -14,3 +14,5 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+st.markdown("Go to 'Coords' and press play on 'S' to watch Tetra move")  # can also use st.caption but not as clear
