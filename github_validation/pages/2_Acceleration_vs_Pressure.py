@@ -9,7 +9,7 @@ from matplotlib.ticker import LinearLocator
 from PIL import Image
 
 # Adding logo and configuring page layout
-logo = Image.open('ares_logo.png')
+logo = 'https://github.com/nahyunnnn/payload-25/blob/main/github_validation/pages/icons/online_ares_logo.jpeg?raw=true'
 st.set_page_config(page_title='Acceleration vs Pressure', page_icon=logo)
 st.logo(logo, size = 'large')
 
