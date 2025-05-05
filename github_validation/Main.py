@@ -104,7 +104,7 @@ if line_image:
         normal_distances =np.clip(distances/tolerance,0,1)
         
         # draw line of best fit:
-        con_2.latex(f"\Large y={m:.2f}x+{b:.2f}")
+        con_2.latex(rf"\Large y={m:.2f}x+{b:.2f}")
         x_min, x_max = int(np.min(x)), int(np.max(x))
         y_min, y_max = int(m*x_min + b), int(m*x_max+b)
         cv.line(img, (x_min, y_min), (x_max, y_max), (0,0,255), 2)
