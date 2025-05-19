@@ -60,7 +60,7 @@ with tab1:
             min_index = time_value_to_index(acc_press_time_data, min)
             max_index = time_value_to_index(acc_press_time_data, max)
             
-            press_data = np.array(acc_press_time_data['Pressure'][min_index:max_index])
+            press_data = np.array(acc_press_time_data['Force'][min_index:max_index])
             acc_data = np.array(acc_press_time_data['Acceleration'][min_index:max_index])
             
             acceleration = pd.DataFrame({
@@ -91,7 +91,7 @@ with tab2:
             acc_press_data = pd.read_csv(data1)
             time_data = acc_press_data['Time']
             acc_data = np.array(acc_press_data['Acceleration'])
-            press_data = np.array(acc_press_data['Pressure'])
+            press_data = np.array(acc_press_data['Force'])
 
             def plot(x,y,z):
 
