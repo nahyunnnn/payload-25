@@ -18,7 +18,7 @@ st.logo(logo, size = 'large')
 
 st.title('Graphs')
 
-tab1, tab2 = st.tabs(["Acceleration vs Time", "Acceleration vs Pressure" ])
+tab1, tab3, tab2 = st.tabs(["Acceleration vs Time", 'Pressure vs Time', "Acceleration vs Pressure" ])
 
 with tab1:
     st.file_uploader('CSV file', key='Graph2')
@@ -74,6 +74,62 @@ with tab1:
             })
 
             fig = px.line(acceleration, x = 'Time', y = 'Acceleration', labels = {'x':'Time (s)', 'y':'Acceleration (ms-2)'})
+            # fig.add_scatter(x=pressure['Time'], y = pressure['Pressure'], mode = 'lines', name = 'Pressure')
+            # fig = px.line('Acceleration', x = time_data[min_index:max_index], y = acc_data, labels = {'x':'Time (s)', 'y':'Acceleration (ms-2)'})
+            # fig = px.line('Pressure', x = time_data[min_index:max_index], y = press_data, labels = {'x':'Time (s)', 'y':'Acceleration (ms-2)'})
+            st.plotly_chart(fig)
+
+    else:
+        st.write('Upload CSV to get started!')
+
+with tab3:
+    st.file_uploader('CSV file', key='Graph3')
+
+    if 'Graph3' in st.session_state and st.session_state['Graph3'] is not None:
+        data3 = st.session_state['Graph3']
+        if data3 is not None:
+            acc_press_time_data = pd.read_csv(data3)
+            time_data = np.array(acc_press_time_data['Time'])
+            def time_index_to_value(dataframe, index):
+            # Input : Dataframe containing a time column
+            #         Index of time 
+            # Output : Value of time in list corresponding to index
+                time_column = np.array(dataframe['Time'])
+                return time_column[index]
+            
+            
+            def last_time_index(dataframe):
+                return pd.Series.last_valid_index(dataframe)
+            
+            def start_time(dataframe):
+                return time_index_to_value(dataframe, 0)
+
+            def end_time(dataframe):
+                return time_index_to_value(dataframe,last_time_index(dataframe))
+
+            def time_step(dataframe):
+                return time_index_to_value(dataframe, int(start_time(dataframe) + 1)) - start_time(dataframe)
+
+            def time_value_to_index(datalist, time):
+                return int(time / time_step(datalist))
+            
+            min_range = time_data[0]
+            max_range = time_data[-1]
+            step = time_step(acc_press_time_data)
+
+            min, max = st.slider(label = 'Time range', min_value = min_range, max_value = max_range, value = (min_range, max_range), step = step)
+
+            min_index = time_value_to_index(acc_press_time_data, min)
+            max_index = time_value_to_index(acc_press_time_data, max)
+            
+            press_data = np.array(acc_press_time_data['Force'][min_index:max_index])
+            
+            pressure = pd.DataFrame({
+                'Time': time_data[min_index:max_index],
+                'Pressure': press_data
+            })
+
+            fig = px.line(pressure, x = 'Time', y = 'Pressure', labels = {'x':'Time (s)', 'y':'Pressure (Pa)'})
             # fig.add_scatter(x=pressure['Time'], y = pressure['Pressure'], mode = 'lines', name = 'Pressure')
             # fig = px.line('Acceleration', x = time_data[min_index:max_index], y = acc_data, labels = {'x':'Time (s)', 'y':'Acceleration (ms-2)'})
             # fig = px.line('Pressure', x = time_data[min_index:max_index], y = press_data, labels = {'x':'Time (s)', 'y':'Acceleration (ms-2)'})
